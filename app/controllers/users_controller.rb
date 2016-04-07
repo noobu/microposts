@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: [:edit, :update, ]
+    before_action :set_user, only: [:edit, :update ]
+    before_action :user_edit,only:[:edit,:update]
     
     
-  def show
+      def show
     @user = User.find(params[:id])
   end
   
@@ -11,9 +12,7 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find(params[:id])
   end
-  
   
   def update
     if @user.update(user_params)
@@ -22,7 +21,7 @@ class UsersController < ApplicationController
     else
       # 保存に失敗した場合は編集画面へ戻す
       render 'edit'
-    end
+     end
   end
   
   
@@ -36,18 +35,21 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+private
   
   def set_user
-    @user= User.find(params[:id])
+    @user= User.find(params[:id]) # urlでセットされているユーザーをとってきている
   end
   
-
   def user_params
     params.require(:user).permit(:name, :email, :prfile,:area,
                                  :password, :password_confirmation)
   end
   
-
-
+    def user_edit
+    unless @user == current_user
+    redirect_to root_path 
+    end
+  end
+  
 end
