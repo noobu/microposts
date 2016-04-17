@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
                                      dependent:   :destroy
   has_many :following_users, through: :following_relationships, source: :followed
   
-   has_many :follower_relationships, class_name:  "Relationship",
+  has_many :follower_relationships, class_name:  "Relationship",
                                     foreign_key: "followed_id",
                                     dependent:   :destroy
   has_many :follower_users, through: :follower_relationships, source: :follower
@@ -36,5 +36,10 @@ class User < ActiveRecord::Base
   # あるユーザーをフォローしているかどうか？
   def following?(other_user)
     following_users.include?(other_user)
+  end
+  
+    # あるユーザーにフォローされているかどうか？ 9追加
+  def followed_by? user
+    follwer_relationships.where(follower_id: user.id).exists?
   end
 end

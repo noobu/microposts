@@ -10,4 +10,11 @@ class RelationshipsController < ApplicationController
     @user = current_user.following_relationships.find(params[:id]).followed
     current_user.unfollow(@user)
   end
+  
+  # 追加９
+  def show
+    @user = User.find(params[:id])
+    @following_relationships = @user.following_relationships.order(created_at: :desc)
+    
+  end
 end

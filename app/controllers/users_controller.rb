@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     else
       # 保存に失敗した場合は編集画面へ戻す
       render 'edit'
-     end
+    end
   end
   
   
@@ -36,7 +36,19 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
+  
+  # 追加９
+  def followings 
+    @user = User.find(params[:id])
+    @followings = @user.following_users
+  end
 
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.follower_users
+  end
+ 
+ 
  private
   
   def set_user
@@ -50,7 +62,7 @@ class UsersController < ApplicationController
   
   def user_edit
     unless @user == current_user
-    redirect_to root_path
+     redirect_to root_path
     end
   end
   

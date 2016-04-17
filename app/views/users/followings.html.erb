@@ -1,0 +1,11 @@
+<h1>followings</h1>
+
+  <div class="col-md-8">
+    <% if @user.following_users.any? %>
+      <h3>Following (<%= @user.following_users.count %>)</h3>
+      <% @followings.each do |f| %>
+      <%= render partial:'relationships/followings', locals: {f: f} %>
+      
+      <% end %>
+    <% end %>
+  </div>
